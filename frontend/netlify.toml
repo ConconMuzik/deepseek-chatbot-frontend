@@ -1,0 +1,4 @@
+# frontend/netlify.toml
+[build]
+command = "echo 'No build needed'"
+publish = "."

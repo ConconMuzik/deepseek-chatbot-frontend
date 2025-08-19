@@ -1,0 +1,26 @@
+async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    if (!userInput.trim()) return;
+    
+    // Add user message to chat
+    appendMessage('user', userInput);
+    
+    // Get bot response
+    const response = await fetch('http://localhost:5000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userInput })
+    });
+    
+    const data = await response.json();
+    appendMessage('bot', data.response);
+}
+
+function appendMessage(sender, text) {
+    const chatBox = document.getElementById('chat-box');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `${sender}-message`;
+    messageDiv.textContent = text;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;  // Auto-scroll
+}
